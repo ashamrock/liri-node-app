@@ -6,6 +6,7 @@ var argThree = process.argv[3];
 var fs = require("fs");
 var request = require("request");
 var Spotify = require('node-spotify-api');
+var axios = require("axios");
 
 switch (argTwo) {
     case "concert-this":
@@ -53,6 +54,9 @@ function spotifyThisSong (song){
     var song = process.argv[3];
     var spotify = new Spotify(keys.spotify);
         
+    axios.get(URL).then(function(response) {
+        var jsonData = response.data;
+
 	spotify.search({
 	type:"track",
     query: song,
@@ -73,12 +77,16 @@ function spotifyThisSong (song){
             console.log(jsonData.song.album);
         }  
 	});	
+});
 }
 
 
 function movieThis(movie) {
     var movie = process.argv[3];
     var queryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&tomatoes=true&apikey=trilogy";
+
+    axios.get(URL).then(function(response) {
+        var jsonData = response.data;
 
     request(queryUrl, function () {
 
@@ -103,6 +111,7 @@ function movieThis(movie) {
         }  
 
     });
+});
 }
 
 function doThis() {
